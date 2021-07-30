@@ -39,6 +39,68 @@ SELECT * FROM retiring_titles
 
 
 --DELIVERABLE 2: 
+--current employees born in '65
+SELECT DISTINCT ON(e.emp_no)
+e.emp_no, 
+e.first_name,
+e.last_name,
+e.birth_date,
+de.from_date,
+de.to_date,
+ti.title
+INTO  mentorship_eligibility
+FROM employees as e
+INNER JOIN dept_emp as de
+ON (e.emp_no = de.emp_no)
+INNER JOIN titles as ti
+ON(e.emp_no = ti.emp_no)
+WHERE (de.to_date = '9999-01-01')
+AND (hire_date BETWEEN '1985-01-01' AND '1988-12-31')
+AND (birth_date BETWEEN '1965-01-01' AND '1965-12-31')
+ORDER BY e.emp_no;
+
+SELECT * FROM mentorship_eligibility;
+-- Number of employees eligible
+SELECT COUNT(me.emp_no) as mycount,
+me.title
+INTO eligibility_by_title
+FROM mentorship_eligibility as me
+GROUP BY me.title
+ORDER BY mycount DESC
+
+SELECT * FROM eligibility_by_title;
+
+--extend eligibility requirements
+SELECT DISTINCT ON(e.emp_no)
+e.emp_no, 
+e.first_name,
+e.last_name,
+e.birth_date,
+de.from_date,
+de.to_date,
+ti.title
+INTO extended_eligibility
+FROM employees as e
+INNER JOIN dept_emp as de
+ON (e.emp_no = de.emp_no)
+INNER JOIN titles as ti
+ON(e.emp_no = ti.emp_no)
+WHERE (de.to_date = '9999-01-01')
+AND (hire_date BETWEEN '1985-01-01' AND '1988-12-31')
+AND (birth_date BETWEEN '1962-01-01' AND '1965-12-31')
+ORDER BY e.emp_no;
+
+-- Number of employees eligible
+SELECT COUNT(ee.emp_no) as mycount,
+ee.title
+INTO extended_eligibility_by_title
+FROM extended_eligibility as ee
+GROUP BY ee.title
+ORDER BY mycount DESC
+
+SELECT * FROM extended_eligibility_by_title;
+
+
 
 
 
