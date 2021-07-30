@@ -1,0 +1,55 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Sales & Dev Retiring\
+\
+--Sales department retirees\
+SELECT e.emp_no,\
+e.first_name,\
+e.last_name\
+INTO sales_retiring\
+FROM employees as e\
+INNER JOIN dept_emp as de\
+ON (e.emp_no = de.emp_no)\
+INNER JOIN departments as d\
+ON (d.dept_no = de.dept_no)\
+WHERE dept_name IN ( 'Sales');\
+\
+SELECT ce.emp_no,\
+ce.first_name,\
+ce.last_name,\
+d.dept_name\
+INTO sales\
+FROM current_emp as ce\
+INNER JOIN dept_emp AS de\
+ON (ce.emp_no = de.emp_no)\
+INNER JOIN departments AS d\
+ON (de.dept_no = d.dept_no)\
+WHERE dept_name IN ( 'Sales');\
+\
+\
+DROP TABLE dept_info CASCADE;\
+DROP TABLE sales_retiring;\
+DROP TABLE retiring_sales;\
+\
+SELECT * FROM sales;\
+\
+\
+SELECT ce.emp_no,\
+ce.first_name,\
+ce.last_name,\
+d.dept_name\
+INTO sales_dev\
+FROM current_emp as ce\
+INNER JOIN dept_emp AS de\
+ON (ce.emp_no = de.emp_no)\
+INNER JOIN departments AS d\
+ON (de.dept_no = d.dept_no)\
+WHERE dept_name IN ( 'Sales', 'Development');\
+\
+SELECT* FROM sales_dev;\
+}
